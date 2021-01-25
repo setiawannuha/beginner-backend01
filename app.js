@@ -1,13 +1,19 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 // const mysql = require('mysql2')
-const route = require('./src/routes/books')
+const bookRoute = require('./src/routes/books')
+const userRoute = require('./src/routes/users')
 
 const app = express()
+const cors = require('cors')
 
+const { PORT } = require('./src/helpers/env')
+
+app.use(cors())
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
-app.use(route)
+app.use(bookRoute)
+app.use(userRoute)
 
 // app.get('/', (req, res) => {
 //   const json = [
@@ -82,6 +88,6 @@ app.use(route)
 //   })
 // })
 
-app.listen(3000, () => {
-  console.log(`Service running on PORT 3000`)
+app.listen(PORT || 3000, () => {
+  console.log(`Service running on PORT ${PORT || 3000}`)
 })
